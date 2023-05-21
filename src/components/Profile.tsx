@@ -1,6 +1,5 @@
 import { getUser } from '@/lib/auth'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export function Profile() {
   const { name, avatarUrl } = getUser()
