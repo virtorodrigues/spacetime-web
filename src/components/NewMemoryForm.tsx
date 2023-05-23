@@ -13,6 +13,7 @@ export function NewMemoryForm() {
 
   async function handleCreateMemory(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    console.log('dasdasdaaaaaaaaaaaaa')
 
     const formData = new FormData(event.currentTarget)
 
@@ -26,10 +27,13 @@ export function NewMemoryForm() {
 
       const uploadResponse = await api.post('upload', uploadFormData)
 
+      console.log(uploadResponse)
+
       coverUrl = uploadResponse.data.fileUrl
     }
 
     const token = Cookie.get('token')
+    console.log(coverUrl)
 
     await api.post(
       '/memories',
