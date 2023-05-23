@@ -5,7 +5,7 @@ const nextConfig = {
       'avatars.githubusercontent.com',
       'localhost',
       'storage.googleapis.com',
-      'https://spacetime-web-seven.vercel.app',
+      'spacetime-web-seven.vercel.app',
     ],
   },
 }
