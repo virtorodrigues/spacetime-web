@@ -6,6 +6,7 @@ const nextConfig = {
       'localhost',
       'storage.googleapis.com',
       'spacetime-web-seven.vercel.app',
+      'spacetime-bucket.s3.amazonaws.com',
     ],
   },
 }
