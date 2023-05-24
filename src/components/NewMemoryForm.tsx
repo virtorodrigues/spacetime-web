@@ -25,12 +25,11 @@ export function NewMemoryForm({ memory }: NewMemoryFormProps) {
 
     const formData = new FormData(event.currentTarget)
 
-    const fileToUpload = formData.get('coverUrl')
+    const fileToUpload: File | null = formData.get('coverUrl') as File
 
     let coverUrl = ''
 
     if (fileToUpload) {
-      // const file = await fileToUpload.file()
       const uploadFormData = new FormData()
       uploadFormData.set('file', fileToUpload)
 
