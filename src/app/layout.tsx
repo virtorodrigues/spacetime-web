@@ -10,6 +10,9 @@ import { Copyright } from '@/components/Copyright'
 import { Hero } from '@/components/Hero'
 import { cookies } from 'next/headers'
 import { Profile } from '@/components/Profile'
+import dayjs from 'dayjs'
+import ptBr from 'dayjs/locale/pt-br'
+dayjs.locale(ptBr)
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' })
 const baiJamjuree = BaiJamjuree({

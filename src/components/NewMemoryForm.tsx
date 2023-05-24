@@ -7,13 +7,21 @@ import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
-export function NewMemoryForm() {
+interface NewMemoryFormProps {
+  memory?: {
+    coverUrl: string
+    content: string
+    createdAt: string
+    id: string
+  }
+}
+
+export function NewMemoryForm({ memory }: NewMemoryFormProps) {
   // const cookies = cookies() only no use client
   const router = useRouter()
 
   async function handleCreateMemory(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log('dasdasdaaaaaaaaaaaaa')
 
     const formData = new FormData(event.currentTarget)
 
@@ -22,36 +30,54 @@ export function NewMemoryForm() {
     let coverUrl = ''
 
     if (fileToUpload) {
+      // const file = await fileToUpload.file()
       const uploadFormData = new FormData()
       uploadFormData.set('file', fileToUpload)
 
-      const uploadResponse = await api.post('upload', uploadFormData)
-
-      console.log(uploadResponse)
-
-      coverUrl = uploadResponse.data.fileUrl
+      if (!memory || (memory && !!fileToUpload.size)) {
+        // dont have memory or have memory but is not the same pic
+        const uploadResponse = await api.post('upload', uploadFormData)
+        coverUrl = uploadResponse.data.fileUrl
+      } else {
+        if (memory) {
+          // there's memory and is the same pic
+          coverUrl = memory.coverUrl
+        }
+      }
     }
 
     const token = Cookie.get('token')
-    console.log(coverUrl)
-
-    await api.post(
-      '/memories',
-      {
-        coverUrl,
-        content: formData.get('content'),
-        isPublic: formData.get('isPublic'),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    if (memory) {
+      await api.put(
+        `/memories/${memory.id}`,
+        {
+          oldCoverUrl: memory.coverUrl,
+          coverUrl,
+          content: formData.get('content'),
         },
-      },
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+    } else {
+      await api.post(
+        '/memories',
+        {
+          coverUrl,
+          content: formData.get('content'),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+    }
 
     router.push('/')
   }
-
   return (
     <form onSubmit={handleCreateMemory} className="flex flex-1 flex-col gap-2">
       <div className="flex items-center gap-4">
@@ -62,29 +88,17 @@ export function NewMemoryForm() {
           <Camera className="2-4 h-4" />
           Anexar mídia
         </label>
-
-        <label
-          htmlFor="isPublic"
-          className="flex items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
-        >
-          <input
-            className="h-4 w-4 rounded border-gray-400 bg-gray-700 text-purple-500"
-            type="checkbox"
-            name="isPublic"
-            id="isPublic"
-            value="true"
-          />
-          Tornar memória pública
-        </label>
       </div>
-
-      <MediaPicker />
+      <MediaPicker coverUrlFromMemory={memory?.coverUrl} />
 
       <textarea
         name="content"
         spellCheck={false}
         className="w-full flex-1 resize-none rounded border-0 bg-transparent p-0 text-lg leading-relaxed text-gray-100 placeholder:text-gray-400 focus:ring-0"
-        placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre."
+        placeholder={
+          memory?.content ||
+          'Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre.'
+        }
       />
 
       <button
