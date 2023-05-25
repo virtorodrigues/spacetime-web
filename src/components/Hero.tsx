@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import logoSpacetime from '../assets/logo-spacetime.svg'
-import Link from 'next/link'
+import { CreateMemoryButton } from './CreateMemoryButton'
 
 export function Hero() {
   return (
@@ -21,12 +21,8 @@ export function Hero() {
           com o mundo!
         </p>
       </div>
-      <Link
-        href="/memories/new"
-        className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
-      >
-        CADASTRAR LEMBRANÇA
-      </Link>
+
+      <CreateMemoryButton />
     </div>
   )
 }
