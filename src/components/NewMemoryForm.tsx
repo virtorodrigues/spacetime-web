@@ -78,12 +78,7 @@ export function NewMemoryForm({ memory }: NewMemoryFormProps) {
       )
     }
 
-    return new Promise((resolve: any) => {
-      setTimeout(() => {
-        resolve()
-        router.push('/')
-      }, 4000)
-    })
+    router.push('/')
   }
   return (
     <form onSubmit={handleCreateMemory} className="flex flex-1 flex-col gap-8">

@@ -25,12 +25,7 @@ export function MemoryDelete({ id }: MemoryDeleteProps) {
       },
     })
 
-    return new Promise((resolve: any) => {
-      setTimeout(() => {
-        resolve()
-        router.push('/')
-      }, 2000)
-    })
+    router.push('/')
   }
 
   return (
@@ -40,7 +35,7 @@ export function MemoryDelete({ id }: MemoryDeleteProps) {
       onClick={handleDelete}
     >
       {disabled ? (
-        <Loader2 className="animate-spin" size={16} />
+        <Loader2 className="animate-spin text-red-500/100" size={16} />
       ) : (
         <>
           <LucideTrash2 className=" h-3.5 w-3.5 " />

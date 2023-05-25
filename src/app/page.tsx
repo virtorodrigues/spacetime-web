@@ -1,10 +1,13 @@
+'use client'
+
 import { EmptyMemories } from '@/components/EmptyMemories'
 import { api } from '@/lib/api'
-import { cookies } from 'next/headers'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 interface Memory {
   id: string
@@ -13,21 +16,25 @@ interface Memory {
   createdAt: string
 }
 
-export default async function Home() {
-  const isAuthenticated = cookies().has('token')
+export default function Home() {
+  const [memories, setMemories] = useState<Memory[]>([])
 
-  if (!isAuthenticated) {
-    return <EmptyMemories />
-  }
+  useEffect(() => {
+    async function getMemories() {
+      const token = Cookies.get('token')
 
-  const token = cookies().get('token')?.value
-  const response = await api.get('/memories', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+      if (token) {
+        const response = await api.get('/memories', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-  const memories: Memory[] = response.data
+        setMemories(response.data || ([] as Memory[]))
+      }
+    }
+    getMemories()
+  }, [setMemories])
 
   if (memories.length === 0) {
     return <EmptyMemories />
