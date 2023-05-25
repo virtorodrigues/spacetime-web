@@ -1,8 +1,9 @@
 'use client'
 
-import { Camera } from 'lucide-react'
+import { Camera, Loader2 } from 'lucide-react'
+
 import { MediaPicker } from './MediaPicker'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
 import { useRouter } from 'next/navigation'
@@ -19,8 +20,10 @@ interface NewMemoryFormProps {
 export function NewMemoryForm({ memory }: NewMemoryFormProps) {
   // const cookies = cookies() only no use client
   const router = useRouter()
+  const [disabled, setDisabled] = useState(false)
 
   async function handleCreateMemory(event: FormEvent<HTMLFormElement>) {
+    setDisabled(true)
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
@@ -75,20 +78,27 @@ export function NewMemoryForm({ memory }: NewMemoryFormProps) {
       )
     }
 
-    router.push('/')
+    return new Promise((resolve: any) => {
+      setTimeout(() => {
+        resolve()
+        router.push('/')
+      }, 4000)
+    })
   }
   return (
-    <form onSubmit={handleCreateMemory} className="flex flex-1 flex-col gap-2">
-      <div className="flex items-center gap-4">
-        <label
-          htmlFor="midia"
-          className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
-        >
-          <Camera className="2-4 h-4" />
-          Anexar mídia
-        </label>
+    <form onSubmit={handleCreateMemory} className="flex flex-1 flex-col gap-8">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
+          <label
+            htmlFor="midia"
+            className="flex cursor-pointer items-center gap-2 text-lg text-gray-200 hover:text-gray-100"
+          >
+            <Camera className="h-5 w-5" />
+            Anexar mídia
+          </label>
+        </div>
+        <MediaPicker coverUrlFromMemory={memory?.coverUrl} />
       </div>
-      <MediaPicker coverUrlFromMemory={memory?.coverUrl} />
 
       <textarea
         name="content"
@@ -101,10 +111,11 @@ export function NewMemoryForm({ memory }: NewMemoryFormProps) {
       />
 
       <button
+        disabled={disabled}
         className="inline-block self-end rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
         type="submit"
       >
-        Salvar
+        {disabled ? <Loader2 className="animate-spin" size={16} /> : 'Salvar'}
       </button>
     </form>
   )
