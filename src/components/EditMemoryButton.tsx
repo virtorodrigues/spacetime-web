@@ -21,7 +21,7 @@ export function EditMemoryButton({ id }: EditMemoryButtonProps) {
   return (
     <button
       disabled={disabled}
-      className="flex items-center gap-1 rounded-full border-2 border-yellow-500/100 px-6 py-3 text-sm  leading-none text-gray-100 transition-colors hover:text-yellow-500/100"
+      className="flex items-center gap-1 rounded-full px-6 py-3 text-sm  leading-none text-gray-100 transition-colors hover:text-yellow-500/100"
       onClick={handleStartEditMemory}
     >
       {disabled ? (
