@@ -4,7 +4,7 @@ import { CreateMemoryButton } from './CreateMemoryButton'
 
 export function Hero() {
   return (
-    <div className="space-y-5">
+    <div className="space-y-10 sm:space-y-5">
       <Image
         src={logoSpacetime}
         width={160}
