@@ -7,6 +7,7 @@ const nextConfig = {
       'storage.googleapis.com',
       'spacetime-vitorodrigues.vercel.app',
       'spacetime-bucket.s3.amazonaws.com',
+      'lh3.googleusercontent.com',
     ],
   },
 }

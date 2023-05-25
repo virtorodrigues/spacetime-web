@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   if (!token) {
     return NextResponse.redirect(signInURL, {
       headers: {
-        'Set-Cookie': `redirectTo=${request.url}; Path=/; HttpOnly; max-age=20`, // HttpOnly: cookie don't show to user, only next backend. max-age=20: 20sec;
+        'Set-Cookie': `redirectTo=${request.url}; Path=/; HttpOnly; max-age=5`, // HttpOnly: cookie don't show to user, only next backend. max-age=20: 20sec;
       },
     })
   }
