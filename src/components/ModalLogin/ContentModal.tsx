@@ -38,9 +38,9 @@ export function ContentModal() {
   return (
     <AlertDialog.Portal>
       <AlertDialog.Overlay className="fixed inset-0 z-[999] h-screen w-screen bg-[#00000075]" />
-      <AlertDialog.Content className="fixed left-2/4 top-2/4 z-[9999] max-h-full w-full max-w-full translate-x-[-50%] translate-y-[-50%] overflow-auto rounded-lg bg-gray-900 p-10 md:max-w-sm ">
+      <AlertDialog.Content className="fixed left-2/4 top-2/4 z-[9999] max-h-full w-full max-w-sm translate-x-[-50%] translate-y-[-50%] overflow-auto rounded-lg bg-gray-900 p-10">
         <AlertDialog.Title className="mb-6 mt-2 text-sm font-bold text-gray-100">
-          Entre com suas conta favorita🔥
+          Entre com sua conta favorita🔥🚀
         </AlertDialog.Title>
         <AlertDialog.Cancel className="fixed right-6 top-6 leading-none">
           <X className="h-4 w-4 font-bold text-gray-100" />
