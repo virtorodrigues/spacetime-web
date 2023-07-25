@@ -1,5 +1,5 @@
 # 🤩 Spacetime Web
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/virtorodrigues/spacetime-web/blob/master/LICENCE) 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/virtorodrigues/spacetime-web/blob/master/LICENSE) 
 
 # 👀 Sobre o projeto
 
